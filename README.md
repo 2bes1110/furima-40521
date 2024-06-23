@@ -8,9 +8,9 @@
 | email               | string     | null: false, unique: true      |
 | encrypted_password  | string     | null: false                    |
 | last_name           | string     | null: false                    |
-| fist_name           | string     | null: false                    |
+| first_name           | string     | null: false                    |
 | last_furigana       | string     | null: false                    |
-| fist_furigana       | string     | null: false                    |
+| first_furigana       | string     | null: false                    |
 | birthday            | date       | null: false                    |
 
 ### Association

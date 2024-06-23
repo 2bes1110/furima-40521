@@ -7,9 +7,11 @@
 | nickname            | string     | null: false                    |
 | email               | string     | null: false, unique: true      |
 | encrypted_password  | string     | null: false                    |
-| name                | string     | null: false                    |
-| furigana            | string     | null: false                    |
-| birthday            | datetime   | null: false                    |
+| last_name           | string     | null: false                    |
+| fist_name           | string     | null: false                    |
+| last_furigana       | string     | null: false                    |
+| fist_furigana       | string     | null: false                    |
+| birthday            | date       | null: false                    |
 
 ### Association
  has_many items
@@ -20,11 +22,11 @@
 | Column                 | Type       | Options                        |
 | ---------------------- | ---------- | ------------------------------ |
 | item_name              | string     | null: false                    |
-| category_id            | integer    |                                |
-| product_condition_id   | integer    |                                |
-| shipping_fee_burden_id | integer    |                                |
-| shipping_region_id     | integer    |                                |
-| days_until_shipping_id | integer    |                                |
+| category_id            | integer    | null: false                    |
+| product_condition_id   | integer    | null: false                    |
+| shipping_fee_burden_id | integer    | null: false                    |
+| shipping_region_id     | integer    | null: false                    |
+| days_until_shipping_id | integer    | null: false                    |
 | price                  | integer    | null: false                    |
 | user                   | references | null: false, foreign_key: true |
 
@@ -36,11 +38,9 @@
 
 | Column              | Type       | Options                        |
 | ------------------- | ---------- | ------------------------------ |
-| shipping_region_id  | references | null: false, foreign_key: true |
-| municipalities      | string     | null: false                    |
-| address             | string     | null: false                    |
-| building_name       | string     | null: false                    |
-| phone_number        | integer    | null: false                    |
+| user                | references | null: false, foreign_key: true |
+| item                | references | null: false, foreign_key: true |
+
 
 ### Association
  belongs_to :user
@@ -51,8 +51,12 @@
 
 | Column              | Type       | Options                        |
 | ------------------- | ---------- | ------------------------------ |
-| user                | references | null: false, foreign_key: true |
-| item                | references | null: false, foreign_key: true |
+| postcode            | integer    | null: false                    |
+| shipping_region_id  | references | null: false, foreign_key: true |
+| municipalities      | string     | null: false                    |
+| address             | string     | null: false                    |
+| building_name       | text       |                                |
+| phone_number        | string     | null: false                    |
 
 ### Association
 belongs_to :order

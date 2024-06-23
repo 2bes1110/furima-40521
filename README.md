@@ -22,6 +22,7 @@
 | Column                 | Type       | Options                        |
 | ---------------------- | ---------- | ------------------------------ |
 | item_name              | string     | null: false                    |
+| product_description    | text       | null: false                    |
 | category_id            | integer    | null: false                    |
 | product_condition_id   | integer    | null: false                    |
 | shipping_fee_burden_id | integer    | null: false                    |
@@ -44,19 +45,20 @@
 
 ### Association
  belongs_to :user
- belongs_to :order
+ belongs_to :item
  has_one :shared
 
  ## shared テーブル
 
 | Column              | Type       | Options                        |
 | ------------------- | ---------- | ------------------------------ |
-| postcode            | integer    | null: false                    |
-| shipping_region_id  | references | null: false, foreign_key: true |
+| postcode            | string     | null: false                    |
+| shipping_region_id  | integer    | null: false                    |
 | municipalities      | string     | null: false                    |
 | address             | string     | null: false                    |
-| building_name       | text       |                                |
+| building_name       | string     |                                |
 | phone_number        | string     | null: false                    |
+| order               | references | null: false, foreign_key: true |
 
 ### Association
 belongs_to :order

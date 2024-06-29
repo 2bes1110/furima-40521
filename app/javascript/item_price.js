@@ -13,7 +13,7 @@
 // })
 
 
-
+  
 window.addEventListener("DOMContentLoaded", () => {
   if ( document.getElementById('item-price')!= null) {
     // 読み込まれたページに'item-price'というid名の要素があれば発火

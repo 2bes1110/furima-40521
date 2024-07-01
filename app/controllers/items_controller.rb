@@ -18,6 +18,12 @@ class ItemsController < ApplicationController
     @item = Item.new
   end
 
+  def show
+    @item = Item.find(params[:id])
+    # @comment = Comment.new
+    # @comments = @prototype.comments.includes(:user)
+  end
+
   private
 
   def item_params

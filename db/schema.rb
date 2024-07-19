@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_06_26_000428) do
+ActiveRecord::Schema[7.0].define(version: 2024_07_12_065034) do
   create_table "active_storage_attachments", charset: "utf8", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -48,10 +48,37 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_26_000428) do
     t.integer "shipping_region_id", null: false
     t.integer "days_until_shipping_id", null: false
     t.integer "price", null: false
-    t.bigint "user_id"
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_items_on_user_id"
+  end
+
+  create_table "order_shareds", charset: "utf8", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "orders", charset: "utf8", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "item_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["item_id"], name: "index_orders_on_item_id"
+    t.index ["user_id"], name: "index_orders_on_user_id"
+  end
+
+  create_table "shareds", charset: "utf8", force: :cascade do |t|
+    t.string "postcode", null: false
+    t.integer "shipping_region_id", null: false
+    t.string "municipalities", null: false
+    t.string "address", null: false
+    t.string "building_name"
+    t.string "phone_number", null: false
+    t.bigint "order_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_shareds_on_order_id"
   end
 
   create_table "users", charset: "utf8", force: :cascade do |t|
@@ -75,4 +102,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_26_000428) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "items", "users"
+  add_foreign_key "orders", "items"
+  add_foreign_key "orders", "users"
+  add_foreign_key "shareds", "orders"
 end

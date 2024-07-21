@@ -6,13 +6,13 @@ class OrdersController < ApplicationController
   def index
     gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
     @ordershared = OrderShared.new
-    @item = Item.find(params[:item_id])
     if current_user == @item.user
       redirect_to root_path
     end
   end
 
   def create
+    gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
     @ordershared = OrderShared.new(order_shared_params)
     @ordershared.user_id = current_user.id
     @ordershared.item_id = params[:item_id].to_i
@@ -38,7 +38,7 @@ class OrdersController < ApplicationController
   end
 
   def order_shared_params
-    params.require(:order_shared).permit(:user_id, :item_id, :postcode, :shipping_region_id, :municipalities, :address, :building_name, :phone_number, :price).merge(user_id: current_user.id, item_id: params[:item_id], token:params[:token])
+    params.require(:order_shared).permit(:postcode, :shipping_region_id, :municipalities, :address, :building_name, :phone_number, :price).merge(user_id: current_user.id, item_id: params[:item_id], token:params[:token])
   end
 
   def pay_item

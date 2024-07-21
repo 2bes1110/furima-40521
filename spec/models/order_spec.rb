@@ -4,15 +4,14 @@ RSpec.describe Order, type: :model do
 
   
   before do
-    @order = FactoryBot.build(:order)
+    user = FactoryBot.create(:user)
+    item = FactoryBot.create(:item)
+    @order = FactoryBot.build(:order, user_id: user.id, item_id: item.id)
   end
 
   describe '購入情報登録' do
     context '内容に問題がある場合' do
       it '必要事項を全て過不足なく入力すると登録できる' do
-        user = FactoryBot.create(:user)
-        item = FactoryBot.create(:item)
-        @order = FactoryBot.build(:order, user_id: user.id, item_id: item.id)
         expect(@order).to be_valid
       end
     end
@@ -21,6 +20,12 @@ RSpec.describe Order, type: :model do
         @order.postcode = ''
         @order.valid?
         expect(@order.errors.full_messages).to include("Postcode can't be blank")
+      end
+
+      it '郵便番号が半角ハイフンを含む形でなければ購入できない' do
+        @order.postcode = '1234567' # ハイフンを含まない郵便番号
+        @order.valid?
+        expect(@order.errors.full_messages).to include("Postcode is invalid") # 適切なエラーメッセージに書き換えてください
       end
 
       it '発送元の地域が空では登録できない' do
@@ -47,10 +52,9 @@ RSpec.describe Order, type: :model do
         expect(@order.errors.full_messages).to include("Address can't be blank")
       end
 
-      it '建物名が空では登録できない' do
+      it '建物名が空でも登録できる' do
         @order.building_name = ''
-        @order.valid?
-        expect(@order.errors.full_messages).to include("Building name can't be blank")
+        expect(@order).to be_valid
       end
 
       it '電話番号が空では登録できない' do
@@ -63,6 +67,18 @@ RSpec.describe Order, type: :model do
         @order.phone_number = 'ﾔﾏﾀﾞ'
         @order.valid?
         expect(@order.errors.full_messages).to include('Phone number is not a number')
+      end
+      
+      it '電話番号が9桁以下では購入できない' do
+        @order.phone_number = '123456789' # 9桁の電話番号
+        @order.valid?
+        expect(@order.errors.full_messages).to include("Phone number is too short (minimum is 10 characters)")
+      end
+
+      it '電話番号が12桁以上では購入できない' do
+        @order.phone_number = '1234567890123' # 12桁以上の電話番号
+        @order.valid?
+        expect(@order.errors.full_messages).to include("Phone number is too long (maximum is 11 characters)")
       end
 
       it 'userが紐付いていなければ出品できない' do

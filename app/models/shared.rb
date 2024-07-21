@@ -1,7 +1,7 @@
 class Shared < ApplicationRecord
 
-  belongs_to :user
-  belongs_to :item
+  belongs_to :order
+
   # include ActiveModel::Model
   # attr_accessor :user_id, :item_id, :postcode, :shipping_region_id, :municipalities, :address, :building_name, :phone_number, :token
 

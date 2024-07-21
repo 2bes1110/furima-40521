@@ -4,7 +4,7 @@ class Order< ApplicationRecord
   # include ActiveModel::Model
   # attr_accessor :user_id, :item_id, :postcode, :shipping_region_id, :municipalities, :address, :building_name, :phone_number, :token
 
-  with_options presence: true do
+  # with_options presence: true do
     validates :user_id
     validates :item_id
     # validates :postcode, format: {with: /\A[0-9]{3}-[0-9]{4}\z/, message: "is invalid. Include hyphen(-)"}
@@ -12,8 +12,8 @@ class Order< ApplicationRecord
     # validates :municipalities
     # validates :address
     # validates :building_name
-    # validates :phone_number, numericality: { only_integer: true }
-  end
+  #   # validates :phone_number, numericality: { only_integer: true }
+  # end
 
   # def save(item_id, user_id)
   #   order = Order.create(item_id: item_id, user_id: user_id)

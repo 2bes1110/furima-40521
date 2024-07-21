@@ -1,8 +1,6 @@
-class OrderShared < ApplicationRecord
+class OrderShared
   include ActiveModel::Model
   attr_accessor :user_id, :item_id, :postcode, :shipping_region_id, :municipalities, :address, :building_name, :phone_number, :token
-
-  validates :token, presence: true
 
   with_options presence: true do
     validates :user_id
@@ -11,8 +9,8 @@ class OrderShared < ApplicationRecord
     validates :shipping_region_id, numericality: { other_than: 1, message: "can't be blank" }
     validates :municipalities
     validates :address
-    validates :building_name
-    validates :phone_number, numericality: { only_integer: true }
+    validates :phone_number, format: { with: /\A\d{10,11}\z/, message: "is invalid" }
+    validates :token
   end
 
   def save

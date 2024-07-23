@@ -3,9 +3,7 @@ require 'rails_helper'
 RSpec.describe OrderShared, type: :model do
   before do
     @user = FactoryBot.create(:user)
-    pp @user
     @item = FactoryBot.create(:item, user_id: @user.id)
-    pp @item
     @order_shared = FactoryBot.build(:order_shared, user_id: @user.id, item_id: @item.id)
   end
 
@@ -13,6 +11,11 @@ RSpec.describe OrderShared, type: :model do
     context '内容に問題がない場合' do
       it '必要事項を全て過不足なく入力すると登録できる' do
           expect(@order_shared).to be_valid
+      end
+
+      it '建物名が空でも登録できる' do
+        @order_shared.building_name = ''
+        expect(@order_shared).to be_valid
       end
     end
     context '内容に問題がある場合' do
@@ -50,11 +53,6 @@ RSpec.describe OrderShared, type: :model do
         @order_shared.address = ''
         @order_shared.valid?
         expect(@order_shared.errors.full_messages).to include("Address can't be blank")
-      end
-
-      it '建物名が空でも登録できる' do
-        @order_shared.building_name = ''
-        expect(@order_shared).to be_valid
       end
 
       it '電話番号が空では登録できない' do

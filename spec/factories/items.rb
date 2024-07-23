@@ -1,5 +1,10 @@
 FactoryBot.define do
   factory :item do
+    before do
+      @item = FactoryBot.create(:item)
+      @order_shared = FactoryBot.build(:order_shared, user_id: @item.user.id, item_id: @item.id)
+    end
+    
     item_name              { 'テスト' }
     product_description    { 'テストします' }
     category_id            { 2 }

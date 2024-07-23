@@ -1,7 +1,5 @@
 FactoryBot.define do
   factory :order_shared do
-    user { FactoryBot.create(:user) }
-    item { FactoryBot.create(:item) }
     postcode { Faker::Number.between(from: 100, to: 999).to_s + "-" + Faker::Number.between(from: 1000, to: 9999).to_s }
     municipalities { Faker::Address.city }
     shipping_region_id { Faker::Number.between(from: 1, to: 47) }
